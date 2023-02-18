@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ProductManagerTest {
+
     ProductRepository repo = new ProductRepository();
     ProductManager manager = new ProductManager(repo);
     Product product1 = new Product(11, "Физика", 250);
@@ -20,7 +21,7 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldAllProdгct() {
+    public void shouldAllProduct() {
         Product[] expected = {product1, product2, product3};
         Product[] actual = repo.findAll();
         Assertions.assertArrayEquals(expected, actual);
@@ -70,7 +71,6 @@ public class ProductManagerTest {
         Assertions.assertArrayEquals(expected, actual);
 
     }
-
 }
 
 

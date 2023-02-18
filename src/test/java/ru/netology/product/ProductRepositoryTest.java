@@ -86,6 +86,4 @@ public class ProductRepositoryTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
-
-
 }
