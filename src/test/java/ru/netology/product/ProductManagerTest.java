@@ -1,77 +1,66 @@
 package ru.netology.product;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ProductManagerTest {
 
-    ProductRepository repo = new ProductRepository();
-    ProductManager manager = new ProductManager(repo);
-    Product product1 = new Product(11, "Физика", 250);
-    Product product2 = new Product(12, "Нокия", 11_000);
-    Product product3 = new Product(13, "Химия", 350);
+    Book book1 = new Book(1, "book1", 555, "author1");
+    Smartphone smartphone1 = new Smartphone(2, "smartphone1", 17777, "manufacturer1");
+    Book book2 = new Book(3, "book2", 484, "author2");
+    Smartphone smartphone2 = new Smartphone(4, "smartphone2", 20226, "manufacturer2");
 
-    @BeforeEach
-    public void setup() {
-        manager.add(product1);
-        manager.add(product2);
-        manager.add(product3);
-
-    }
+    Repository repo = new Repository();
 
     @Test
-    public void shouldAllProduct() {
-        Product[] expected = {product1, product2, product3};
-        Product[] actual = repo.findAll();
-        Assertions.assertArrayEquals(expected, actual);
+    public void shouldFindProduct() {
+        ProductManager manager = new ProductManager(repo);
 
-
-    }
-
-    @Test
-    public void shouldSearchByText() {
-
-
-        Product[] expected = {product3};
-        Product[] actual = manager.searchBy("Химия");
-        Assertions.assertArrayEquals(expected, actual);
-
-    }
-
-    @Test
-    public void shouldSearchBySomeBookByText() {
-        Book book1 = new Book(14, "Онегин", 450, "Пушкин А.С.");
-        Book book2 = new Book(15, "Азбука", 600, "Жуков И.И.");
-        Book book3 = new Book(16, "Азбука", 250, "Иванов И.И.");
         manager.add(book1);
+        manager.add(smartphone1);
         manager.add(book2);
-        manager.add(book3);
+        manager.add(smartphone2);
 
+        manager.searchBy("book");
 
-        Product[] expected = {book2, book3};
-        Product[] actual = manager.searchBy("Азбука");
+        Product[] expected = {book1, book2};
+        Product[] actual = manager.searchBy("book");
+
         Assertions.assertArrayEquals(expected, actual);
 
     }
 
     @Test
-    public void shouldSearchBySmartphoneByText() {
-        Smartphone smartphone1 = new Smartphone(17, "Samsung", 15_000, "Китай");
-        Smartphone smartphone2 = new Smartphone(18, "Apple iPhone", 45_000, "США");
-        Smartphone smartphone3 = new Smartphone(19, "Honor", 16_000, "Китай");
+    public void shouldNotFindProduct() {
+        ProductManager manager = new ProductManager(repo);
 
+        manager.add(book1);
         manager.add(smartphone1);
+        manager.add(book2);
         manager.add(smartphone2);
-        manager.add(smartphone3);
 
+        manager.searchBy("laptop");
 
-        Product[] expected = {smartphone1};
-        Product[] actual = manager.searchBy("Samsung");
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("laptop");
+
         Assertions.assertArrayEquals(expected, actual);
+    }
 
+    @Test
+    public void shouldFindProductByIncompleteWord() {
+        ProductManager manager = new ProductManager(repo);
+
+        manager.add(book1);
+        manager.add(smartphone1);
+        manager.add(book2);
+        manager.add(smartphone2);
+
+        manager.searchBy("phone");
+
+        Product[] expected = {smartphone1, smartphone2};
+        Product[] actual = manager.searchBy("phone");
+
+        Assertions.assertArrayEquals(expected, actual);
     }
 }
-
-
-

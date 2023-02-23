@@ -1,6 +1,6 @@
 package ru.netology.product;
-
 public class Product {
+
     protected int id;
     protected String name;
     protected int price;
@@ -18,6 +18,9 @@ public class Product {
     public String getName() {
         return name;
     }
+
+
 }
+
 
 
